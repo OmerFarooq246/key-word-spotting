@@ -1,0 +1,2 @@
+- if use mlps, reduce time steps, this will create generalized mfccs, preventign finer details, oviding overfitting in mlps.
+- try mlp with feature increase/expand like cnn, shallow to deep.
