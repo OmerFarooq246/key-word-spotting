@@ -1,6 +1,7 @@
 import tensorflow as tf
 from config import config
 import matplotlib.pyplot as plt
+import math
 
 def compute_mfcc_tf(audio, sample_rate=16000):
     # audio: 1D tensor (float32), normalized between [-1, 1]
@@ -122,3 +123,56 @@ def plot_distributions(train_dist, val_dist, test_dist, figsize=(25, 6)):
     ax[2].set_title('Test Distribution')
     ax[2].set_xlabel('Classes')
     ax[2].set_ylabel('Count')
+
+
+# def save_and_print_summary(model, file_path):
+#     with open(file_path, "w") as f:
+#         def print_both(x):
+#             print(x)
+#             f.write(x + "\n")
+#         model.summary(print_fn=print_both)
+
+
+def create_summary(model, dummy_input, col_width=30, path=None):
+    x = dummy_input
+    total_trainable = 0
+    total_non_trainable = 0
+    summary = ""
+
+    summary += f"Model: {model.name}\n"
+    summary += "-"*(col_width*3)+"\n"
+    summary += f"{'Layer':<{col_width}}" + f"{'Output Shape':<{col_width}}" + f"{'Params':<{col_width}}\n"
+    summary += "-"*(col_width*3)+"\n"
+
+    for layer in model.layers:
+        x = layer(x)
+        trainable_count = sum(tf.size(w).numpy() for w in layer.trainable_weights)
+        non_trainable_count = sum(tf.size(w).numpy() for w in layer.non_trainable_weights)
+        total_trainable += trainable_count
+        total_non_trainable += non_trainable_count
+        
+        layer_name = f"{layer.name} ({layer.__class__.__name__})"
+        output_shape = str(x.shape)
+        params = f"{trainable_count} + {non_trainable_count}"
+
+        if len(layer_name) > col_width-2:
+            for i in range(math.ceil(len(layer_name)/(col_width-2))):
+                start = (i)*(col_width-2)
+                end = (i+1)*(col_width-2)
+                summary += f"{layer_name[start:end]:<{col_width}}{output_shape:<{col_width}}{params:<{col_width}}\n"
+                output_shape = ""
+                params = ""
+            summary += "\n"
+        else:
+            summary += f"{layer_name:<{col_width}}{output_shape:<{col_width}}{params:<{col_width}}\n\n"
+
+    summary += "="*(col_width*3)+"\n"
+    summary += f"Total params: {total_trainable+total_non_trainable}\n"
+    summary += f"Trainable params: {total_trainable}\n"
+    summary += f"Non-trainable params: {total_non_trainable}\n"
+    summary += "-"*(col_width*3)
+    print(summary)
+
+    if path:
+        with open(path, "w") as f:
+            f.write(summary)

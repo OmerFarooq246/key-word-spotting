@@ -1,0 +1,25 @@
+Model: model_9
+------------------------------------------------------------------------------------------
+Layer                         Output Shape                  Params                        
+------------------------------------------------------------------------------------------
+separable_conv1d (SeparableC  (64, 63, 16)                  263 + 0                       
+onv1D)                                                                                    
+
+separable_conv1d_1 (Separabl  (64, 61, 32)                  592 + 0                       
+eConv1D)                                                                                  
+
+separable_conv1d_2 (Separabl  (64, 59, 64)                  2208 + 0                      
+eConv1D)                                                                                  
+
+dropout (Dropout)             (64, 59, 64)                  0 + 0                         
+
+global_average_pooling1d (Gl  (64, 64)                      0 + 0                         
+obalAveragePooling1D)                                                                     
+
+dense (Dense)                 (64, 12)                      780 + 0                       
+
+==========================================================================================
+Total params: 3843
+Trainable params: 3843
+Non-trainable params: 0
+------------------------------------------------------------------------------------------
