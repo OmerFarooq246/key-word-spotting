@@ -11,6 +11,14 @@ The main goal is to convert raw 1-second speech audio into a representation that
 
 ---
 
+## MFCC Feature Extraction Pipeline
+
+Visualizing how raw speech is transformed into lightweight MFCC features for embedded keyword recognition.
+
+![MFCC Pipeline](mfccs-vector.svg)
+
+---
+
 ## Why MFCCs for Keyword Spotting?
 
 Raw audio is a long sequence of amplitude values over time. While it contains all the information, it is:
@@ -381,9 +389,3 @@ This repository is intended to help understand:
 - how raw speech becomes ML-ready MFCC features
 
 ---
-
-## MFCC Feature Extraction Pipeline
-
-Visualizing how raw speech is transformed into lightweight MFCC features for embedded keyword recognition.
-
-![MFCC Pipeline](mfccs-vector.svg)
