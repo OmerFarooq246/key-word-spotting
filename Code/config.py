@@ -32,7 +32,7 @@ class Config():
     NUM_MEL_BINS = 40
     NUM_MFCCS = 13			# standard for speech recognition
     LOWER_EDGE_HERTZ = 20
-    UPPER_EDGE_HERTZ = 4000
+    UPPER_EDGE_HERTZ = 8000
     SR = 16000
 
     SEED = 42

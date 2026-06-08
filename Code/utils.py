@@ -12,7 +12,7 @@ def compute_mfcc_tf(audio, sample_rate=16000):
     # num_mel_bins = 40
     # num_mfccs = 13			# standard for speech recognition
     # lower_edge_hertz = 20
-    # upper_edge_hertz = 4000
+    # upper_edge_hertz = 8000
 
     # compute STFT
     stft = tf.signal.stft(
@@ -36,7 +36,7 @@ def compute_mfcc_tf(audio, sample_rate=16000):
     mel_spectrogram = tf.matmul(spectrogram, linear_to_mel_weight_matrix)
 
     # convert to log scale
-    log_mel_spectrogram = tf.math.log(mel_spectrogram + 1e-6) #1e-6 added to prevent log(0)
+    log_mel_spectrogram = tf.math.log(tf.maximum(mel_spectrogram, 1e-6)) #1e-6 added to prevent log(0)
 
     # compute mfccs
     mfccs = tf.signal.mfccs_from_log_mel_spectrograms(log_mel_spectrogram)
